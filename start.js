@@ -1,9 +1,10 @@
-const { exec } = require('child_process');
-exec('webpack serve --mode development', (err, stdout, stderr) => {
-    if (err) {
-        console.error(`Error: ${err.message}`);
-        return;
-    }
-    console.log(stdout);
-    console.error(stderr);
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
+const config = require('./webpack.config');
+
+const compiler = webpack(config);
+const server = new WebpackDevServer({ ...config.devServer }, compiler);
+
+server.startCallback(() => {
+  console.log('Development server running on http://localhost:3000');
 });
